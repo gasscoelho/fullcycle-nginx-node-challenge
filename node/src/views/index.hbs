@@ -1,0 +1,34 @@
+<div class="card-container">
+  <div id="navigateToAddPerson" class="card">
+    <div class="card-icon">
+      {{{ addAvatar }}}
+    </div>
+    <h2 class="text-xl font-semibold">Add new person</h2>
+    <p class="text-base text-shadow font-medium pt-2">Add a new person to the system</p>
+  </div>
+  <div id="navigateToRemovePeople" class="card {{#unless people.length}}card-disabled{{/unless }}">
+    <div class="card-icon">
+      {{{ removeAvatar }}}
+    </div>
+    <h2 class="text-xl font-semibold">Remove person</h2>
+    <p class="text-base text-shadow font-medium pt-2">Remove an existing person from the system</p>
+  </div>
+</div>
+
+{{#if people.length}}
+  <div class="text-center">
+    <h2 class="text-xl text-shadow py-12">Meet the people</h2>
+    <div class="people-list">
+      {{#each people}}
+        <div class="person-container">
+          <div class="person-avatar">
+            {{{ avatar }}}
+          </div>
+          <h3 class="text-lg">{{fullName}}</h3>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+{{/if}}
+
+<script src="/js/handleHomeActions.js"></script>

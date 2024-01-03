@@ -1,0 +1,17 @@
+<div class="btn mb-2">
+  <a href="/">Back</a>
+</div>
+<div id="form-container">
+  <h2 class="text-xl text-light">Add New Person</h2>
+  <p class="text-lg text-shadow">Fill in the details below</p>
+  <form id="person-form" class="form-container pt-6">
+    <input type="text" name="firstName" placeholder="First Name" class="input-style" autocomplete="off" required>
+    <input type="text" name="lastName" placeholder="Last Name" class="input-style" autocomplete="off" required>
+    <button type="submit" class="action-btn">Add</button>
+  </form>
+</div>
+
+{{> success showLink=true includeMargin=true }}
+{{> error }}
+
+<script src="/js/handlePersonForm.js"></script>

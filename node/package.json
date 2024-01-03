@@ -1,0 +1,40 @@
+{
+  "name": "nginx-with-node",
+  "type": "module",
+  "version": "0.0.1",
+  "author": "Gabriel Coelho <gaaucocoelho@gmail.com>",
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/server.js"
+  },
+  "imports": {
+    "#config/*": "./src/config/*.js",
+    "#infra/*": "./src/infra/*.js",
+    "#lib/*": "./src/lib/*.js",
+    "#middlewares/*": "./src/middlewares/*.js",
+    "#routes/*": "./src/routes/*.js",
+    "#usecase/*": "./src/usecase/*.js",
+    "#utils/*": "./src/utils/*.js"
+  },
+  "dependencies": {
+    "@dicebear/adventurer": "^7.0.1",
+    "@dicebear/core": "^7.0.1",
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-handlebars": "^7.1.2",
+    "hbs": "^4.2.0",
+    "helmet": "^7.1.0",
+    "mysql2": "^3.6.5",
+    "winston": "^3.11.0"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^2.1.0",
+    "eslint": "^8.54.0",
+    "nodemon": "^3.0.1"
+  },
+  "resolutions": {
+    "strip-ansi": "^6.0.1"
+  }
+}
