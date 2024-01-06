@@ -1,0 +1,49 @@
+# ========================================
+# Base Layer
+# ========================================
+FROM node:20.10-slim AS base
+
+WORKDIR /app
+
+COPY package.json ./
+COPY yarn.lock ./
+
+# ========================================
+# Dependencies Layer
+# ========================================
+FROM base AS dependencies
+
+# Set Dockerize environment variable
+ENV DOCKERIZE_VERSION v0.7.0
+
+# Install dockerize
+RUN apt-get update \
+    && apt-get install -y wget \
+    && wget -O - https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz | tar xzf - -C /usr/local/bin \
+    && apt-get autoremove -yqq --purge wget && rm -rf /var/lib/apt/lists/*
+
+# Install production dependencies
+RUN yarn install --production
+
+# ========================================
+# Final Layer
+# ========================================
+FROM base AS final
+
+# Set Node environment variable
+ENV NODE_ENV production
+
+# Copy installed dependencies from the dependencies stage
+COPY --from=dependencies /app/node_modules ./node_modules
+
+# Copy dockerize
+COPY --from=dependencies /usr/local/bin/dockerize /usr/local/bin/dockerize
+
+# Copy the application code
+COPY . .
+
+# Execute dockerize to wait for the database to be fully initialized
+ENTRYPOINT ["dockerize", "-wait", "tcp://db:3306", "docker-entrypoint.sh"]
+
+# Command to run the application
+CMD [ "yarn", "start" ]

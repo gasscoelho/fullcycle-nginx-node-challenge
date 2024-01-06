@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:5.7
+    container_name: db
+    restart: always
+    tty: true
+    environment:
+      - MYSQL_DATABASE=$DB_DATABASE
+      - MYSQL_ROOT_PASSWORD=$DB_ROOT_PASSWORD
+    networks:
+      - appnet
+
+  app:
+    build:
+      context: ./node
+      dockerfile: Dockerfile.prod
+    image: challenge-two/app:prod
+    container_name: app
+    restart: always
+    user: "${UID}:${GID}"
+    expose:
+      - 3000
+    depends_on:
+      - db
+    networks:
+      - appnet
+
+  nginx:
+    build:
+      context: ./nginx
+    image: challenge-two/nginx
+    container_name: nginx
+    ports:
+      - 8080:80
+    networks:
+      - appnet
+
+networks:
+  appnet:
+    driver: bridge

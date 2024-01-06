@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:5.7
+    container_name: db
+    restart: always
+    tty: true
+    volumes:
+      - ./node/db:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=$DB_DATABASE
+      - MYSQL_ROOT_PASSWORD=$DB_ROOT_PASSWORD
+    networks:
+      - appnet
+
+  app:
+    build:
+      context: ./node
+      dockerfile: Dockerfile.dev
+    image: challenge-two/app:dev
+    container_name: app
+    user: "${UID}:${GID}"
+    stdin_open: true
+    tty: true
+    ports:
+      - 3000:3000
+    volumes:
+      - ./node:/workspace
+    depends_on:
+      - db
+    networks:
+      - appnet
+
+networks:
+  appnet:
+    driver: bridge
