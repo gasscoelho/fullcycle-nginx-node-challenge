@@ -1,0 +1,11 @@
+# Local notes
+.local
+
+# Env files
+.env
+
+# Database volume
+node/db
+
+# Dependencies
+node/node_modules
