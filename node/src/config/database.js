@@ -1,5 +1,10 @@
 import { env } from 'node:process'
-import 'dotenv/config'
+import dotenv from 'dotenv'
+
+if (env.NODE_ENV === 'test')
+  dotenv.config({ path: '.env.test' })
+else
+  dotenv.config()
 
 const defaultConfig = {
   host: env.DB_HOST,
