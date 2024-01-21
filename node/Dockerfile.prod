@@ -43,7 +43,7 @@ COPY --from=dependencies /usr/local/bin/dockerize /usr/local/bin/dockerize
 COPY . .
 
 # Execute dockerize to wait for the database to be fully initialized
-ENTRYPOINT ["dockerize", "-wait", "tcp://db:3306", "docker-entrypoint.sh"]
+ENTRYPOINT ["dockerize", "-wait", "tcp://db:3306", "-timeout", "20s", "docker-entrypoint.sh"]
 
 # Command to run the application
 CMD [ "yarn", "start" ]
