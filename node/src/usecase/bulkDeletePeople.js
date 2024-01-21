@@ -1,5 +1,5 @@
-import { deleteMany } from '#infra/repository/personRepository'
-
-export default async function bulkDeletePeople(ids) {
-  await deleteMany(ids)
+export default function bulkDeletePeople(personRepository) {
+  return async (ids) => {
+    await personRepository.deleteMany(ids)
+  }
 }

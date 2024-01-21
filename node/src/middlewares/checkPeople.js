@@ -1,8 +1,8 @@
-import { getCount } from '#infra/repository/personRepository'
-
-export default async function checkPeople(req, res, next) {
-  const count = await getCount()
-  if (count)
-    return next()
-  res.redirect('/')
+export default function checkPeople(personRepository) {
+  return async (req, res, next) => {
+    const count = await personRepository.getCount()
+    if (count)
+      return next()
+    res.redirect('/')
+  }
 }
