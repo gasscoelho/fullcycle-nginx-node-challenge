@@ -2,7 +2,7 @@
 .local
 
 # Env files
-.env
+.env*
 
 # Database volume
 node/db
