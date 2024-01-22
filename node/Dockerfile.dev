@@ -1,15 +1,24 @@
 FROM node:20.10
 
+ARG DOCKER_GID=1001
+
+# Create a 'docker' group
+RUN groupadd -g ${DOCKER_GID} docker
+
 WORKDIR /workspace
 
 # Set Dockerize environment variable
 ENV DOCKERIZE_VERSION v0.7.0
 
-# Install dockerize
+# Install docker
 RUN apt-get update \
-    && apt-get install -y wget \
+    && apt-get install -y curl \
+    && curl -sSL https://get.docker.com/ | sh
+
+# Install dockerize
+RUN apt-get install -y wget \
     && wget -O - https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz | tar xzf - -C /usr/local/bin \
     && apt-get autoremove -yqq --purge wget && rm -rf /var/lib/apt/lists/*
 
 # Execute dockerize to wait for the database to be fully initialized
-ENTRYPOINT ["dockerize", "-wait", "tcp://db:3306", "docker-entrypoint.sh"]
+ENTRYPOINT ["dockerize", "-wait", "tcp://db:3306", "-timeout", "20s", "docker-entrypoint.sh"]
