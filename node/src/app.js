@@ -4,8 +4,26 @@ import express from 'express'
 import helmet from 'helmet'
 import bodyParser from 'body-parser'
 import { engine } from 'express-handlebars'
-import apiRoutes from '#routes/api/index'
-import clientRoutes from '#routes/client/index'
+import apiMainController from '#routes/api/index'
+import clientMainController from '#routes/client/index'
+
+// Dependencies
+import { pool } from '#infra/database/index'
+import { createPersonRepository } from '#infra/repository/personRepository'
+import createCheckPeopleMiddleware from '#middlewares/checkPeople'
+import createAddPersonUsecase from '#usecase/addPerson'
+import createBulkDeletePeopleUsecase from '#usecase/bulkDeletePeople'
+import createGetPeopleUsecase from '#usecase/getPeople'
+
+const personRepository = createPersonRepository(pool)
+const checkPeople = createCheckPeopleMiddleware(personRepository)
+const addPerson = createAddPersonUsecase(personRepository)
+const bulkDeletePeople = createBulkDeletePeopleUsecase(personRepository)
+const getPeople = createGetPeopleUsecase(personRepository)
+//
+
+const apiRoutes = apiMainController(addPerson, bulkDeletePeople)
+const clientRoutes = clientMainController(getPeople, checkPeople)
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
