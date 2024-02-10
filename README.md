@@ -4,6 +4,10 @@
 
 This repository contains a Node.js application designed for the "Nginx com Node.js" challenge, part of the Docker module in the **FullCycle 3.0** course. The challenge focuses on implementing an Nginx reverse proxy to interact with a Node.js application that records entries in a MySQL database. The primary goal is to demonstrate the practical use of Nginx in conjunction with a Node.js backend.
 
+## Project Demo
+
+![demo-nginx-with-node-challenge](https://github.com/gasscoelho/fullcycle-nginx-node-challenge/assets/33602013/6f3c63c9-00dd-4a0b-bd78-282a3717d599)
+
 ## Challenge Requirements
 
 - Implement Nginx as a reverse proxy that directs requests to a Node.js application.
