@@ -44,6 +44,13 @@ yarn dev
 
 The app should then be available at `localhost:3000`.
 
+> [!IMPORTANT]
+> Before running `yarn test` for the first time, it's necessary to adjust file permissions for the database volume on your host machine, especially if you're using WSL. This step ensures that the test environment can access and modify the database files without permission errors. In your host terminal (not within the Docker environment), execute the following command:
+> ```sh
+> sudo chown -R $USER:$USER node/db
+> ```
+> This command changes the ownership of the node/db directory to your current user, resolving potential permission issues when running tests.
+
 ### Production Environment
 
 To set up the production environment, simply run the docker-compose command:
