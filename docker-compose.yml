@@ -1,8 +1,6 @@
-version: '3'
-
 services:
   db:
-    image: mysql:5.7
+    image: mysql:8
     container_name: db
     restart: always
     tty: true
@@ -16,7 +14,6 @@ services:
     build:
       context: ./node
       dockerfile: Dockerfile.prod
-    image: challenge-two/app:prod
     container_name: app
     restart: always
     user: "${UID}:${GID}"
@@ -30,7 +27,6 @@ services:
   nginx:
     build:
       context: ./nginx
-    image: challenge-two/nginx
     container_name: nginx
     ports:
       - 8080:80
