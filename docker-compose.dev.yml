@@ -18,6 +18,7 @@ services:
       dockerfile: Dockerfile.dev
       args:
         DOCKER_GID: 1001
+    image: challenge-two/app:dev
     environment:
       - TESTCONTAINERS_HOST_OVERRIDE=host.docker.internal
     container_name: app
