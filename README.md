@@ -20,6 +20,22 @@ This repository contains a Node.js application designed for the "Nginx com Node.
 
 ## Instructions
 
+### Env Files
+
+This project uses several environment (.env) files to manage configurations for different parts of the application. Below is a guide on how to set up each:
+
+1. **Root Project `.env`**:
+   - **Purpose**: Used by Docker Compose to configure the services.
+   - **Setup**: Copy the `env.example` values to `.env`.
+
+2. **Node Project `.env`**:
+   - **Purpose**: Contains configuration specific to the Node.js application.
+   - **Setup**: Copy the `env.example` values to `.env`.
+
+3. **Node Test Environment `.env.test`**:
+   - **Purpose**: Manages settings used during testing.
+   - **Setup**: Copy the `env.test.example` values to `.env.test`.
+
 ### Development Environment
 
 To set up and enter the development environment for the project, simply run the following command:
