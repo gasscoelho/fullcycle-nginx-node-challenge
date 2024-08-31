@@ -12,7 +12,7 @@ describe('application', () => {
 
   beforeAll(async () => {
     // Launch a container for the test db
-    mysqlContainer = await new GenericContainer('mysql:5.7')
+    mysqlContainer = await new GenericContainer('mysql:8')
       .withNetworkMode('nginx-with-node_appnet') // This might not work in a CI pipeline
       .withNetworkAliases('db_test')
       .withEnvironment({ MYSQL_DATABASE: env.DB_DATABASE, MYSQL_ROOT_PASSWORD: env.DB_ROOT_PASSWORD })
