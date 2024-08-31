@@ -1,7 +1,7 @@
 export function createPersonRepository(pool) {
   const deleteMany = async (ids) => {
     const sql = 'DELETE FROM person WHERE id in (?)'
-    pool.query(sql, [ids])
+    return pool.query(sql, [ids])
   }
 
   const getAll = async () => {
