@@ -37,4 +37,5 @@ services:
 
 networks:
   appnet:
+    name: nginx-with-node_appnet
     driver: bridge
