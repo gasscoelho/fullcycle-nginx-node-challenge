@@ -15,7 +15,7 @@ build-dev:
 	@docker-compose -f docker-compose.dev.yml build --no-cache
 
 run-dev:
-	@docker-compose -f docker-compose.dev.yml up -d --pull=never
+	@docker-compose -f docker-compose.dev.yml up -d
 	@docker exec -it app bash
 
 stop-dev:

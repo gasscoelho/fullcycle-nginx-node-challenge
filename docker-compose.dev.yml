@@ -17,7 +17,8 @@ services:
       context: ./node
       dockerfile: Dockerfile.dev
       args:
-        DOCKER_GID: "${DEV_DOCKER_GID}"
+        USER_ID: ${DEV_UID:-1000}
+        DOCKER_GID: ${DEV_DOCKER_GID:-1001}
     image: challenge-two/app:dev
     environment:
       - TESTCONTAINERS_HOST_OVERRIDE=host.docker.internal
