@@ -2,8 +2,16 @@ FROM node:20.10
 
 ARG DOCKER_GID=1001
 
-# Create a 'docker' group
-RUN groupadd -g ${DOCKER_GID} docker
+ENV USER_NAME=dockeruser
+ENV GROUP_NAME=dockergroup
+
+# Create group if it does not exist, then create user and add to the group
+RUN if getent group ${DOCKER_GID} ; then \
+        GROUP_NAME=$(getent group ${DOCKER_GID} | cut -d: -f1) ; \
+    else \
+        groupadd -g ${DOCKER_GID} ${GROUP_NAME} ; \
+    fi && \
+    useradd -m -s /bin/bash -g ${GROUP_NAME} ${USER_NAME}
 
 WORKDIR /workspace
 
@@ -19,6 +27,8 @@ RUN apt-get update \
 RUN apt-get install -y wget \
     && wget -O - https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz | tar xzf - -C /usr/local/bin \
     && apt-get autoremove -yqq --purge wget && rm -rf /var/lib/apt/lists/*
+
+USER ${USER_NAME}
 
 # Execute dockerize to wait for the database to be fully initialized
 ENTRYPOINT ["dockerize", "-wait", "tcp://db:3306", "-timeout", "20s", "docker-entrypoint.sh"]
