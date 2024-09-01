@@ -170,7 +170,7 @@ In Summary:
 - Customizing the Docker image to include Docker, ensuring it was equipped for the tasks at hand.
 - Adding a volume for the Docker socket to the Docker Compose setup, establishing the necessary link for container-host communication.
 - Updating user permissions to avoid access issues, specifically adding the container user to the Docker group to smooth out permission wrinkles.
-- Overriding the Testcontainers host setting to `host.docker.internal``, a necessary adjustment for compatibility with my WSL2 and Docker Desktop environment.
+- Overriding the Testcontainers host setting to `host.docker.internal`, a necessary adjustment for compatibility with my WSL2 and Docker Desktop environment.
 
 Implementing these adjustments was crucial for my development environment to work seamlessly with Docker. However, when considering a Continuous Integration (CI) environment, both DinD and DooD approaches come with their share of security concerns. Interestingly, there's a promising solution called Sysbox. This tool offers a way to employ DinD strategies while maintaining isolation, effectively sidestepping those security pitfalls. Unfortunately, due to my setup with WSL2, I couldn't get Sysbox up and running locally to give it a try.
 
