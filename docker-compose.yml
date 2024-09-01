@@ -29,6 +29,8 @@ services:
       context: ./nginx
     image: challenge-two/nginx
     container_name: nginx
+    depends_on:
+      - app
     ports:
       - 8080:80
     networks:
