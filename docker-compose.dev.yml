@@ -17,14 +17,11 @@ services:
       context: ./node
       dockerfile: Dockerfile.dev
       args:
-        DOCKER_GID: 1001
+        DOCKER_GID: "${DEV_DOCKER_GID}"
     image: challenge-two/app:dev
     environment:
       - TESTCONTAINERS_HOST_OVERRIDE=host.docker.internal
     container_name: app
-    user: "${UID}:${GID}"
-    group_add:
-      - "1001"
     stdin_open: true
     tty: true
     ports:
