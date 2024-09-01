@@ -18,6 +18,17 @@ This repository contains a Node.js application designed for the "Nginx com Node.
 - Configure docker-compose so that the environment can be set up with the command `docker-compose up -d`, and the application is accessible on `localhost:8080`.
 - Use JavaScript as the programming language for the Node.js application.
 
+## Table of Contents
+
+1. [Instructions](#instructions)
+   - [Env Files](#env-files)
+   - [Development Environment](#development-environment)
+   - [Production Environment](#production-environment)
+2. [Development Journey](#development-journey)
+   - [Refactoring to Higher-Order Functions (HoF)](#refactoring-to-higher-order-functions-hof)
+   - [Testing the Project](#testing-the-project)
+      - [DinD vs DooD (Sibling Container)](dind-vs-dood-sibling-container) 
+
 ## Instructions
 
 ### Env Files
@@ -36,7 +47,36 @@ This project uses several environment (.env) files to manage configurations for 
    - **Purpose**: Manages settings used during testing.
    - **Setup**: Copy the `env.test.example` values to `.env.test`.
 
+> [!NOTE]  
+> If you plan to run the application in **development mode**, you'll need to provide the host user ID and  Docker group ID to avoid permission issues that might arise depending on your system setup (e.g., WSL).
+> 
+> - **User ID**: This can be obtained by running the following command:
+>   ```bash
+>   id -u
+>   ```
+>   Example output: `1000`
+> 
+> - **Docker Group ID (required if running tests)**: First, identify the group name associated with Docker by running:
+>   ```bash
+>   ls -l /var/run/docker.sock
+>   ```
+>   Example output: `lrw-rw----  1 john  docker  38 26 Ago 10:01 /var/run/docker.sock -> /Users/john/.docker/run/docker.sock`
+> 
+>   Then, retrieve the group ID by running:
+>   ```bash
+>   getent group docker | cut -d: -f3
+>   ```
+>   Replace `docker` with the actual group name if it's different.
+> 
+> - **Permissions**: Ensure the Docker group has write permissions. If you encounter permission issues, you may need to adjust the permissions by running a command like `sudo chmod 660 /var/run/docker.sock` or, use the root group ID (`0`) as a workaround.
+
 ### Development Environment
+
+> [!NOTE]  
+> If it's your first time running the project, then you'll need to build it first by running the following command:
+> ```sh
+> make build-dev
+> ```
 
 To set up and enter the development environment for the project, simply run the following command:
 ```sh
@@ -48,6 +88,10 @@ This command starts the necessary services using `docker-compose` and then acces
 > [!NOTE]  
 > If `make` is not available on your system, you can achieve the same result by running the following commands:
 > ```sh
+> # build command
+> docker-compose -f docker-compose.dev.yml build --no-cache
+> 
+> # run command
 > docker-compose -f docker-compose.dev.yml up -d
 > docker exec -it app bash
 > ```
@@ -75,7 +119,7 @@ The app should then be available at `localhost:3000`.
 
 To set up the production environment, simply run the docker-compose command:
 ```sh
-docker-compose up -d
+docker-compose build --no-cache && docker-compose up -d
 ```
 
 The app should then be available at `localhost:8080`.
