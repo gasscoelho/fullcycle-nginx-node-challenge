@@ -17,7 +17,6 @@ services:
     image: challenge-two/app:prod
     container_name: app
     restart: always
-    user: "${UID}:${GID}"
     expose:
       - 3000
     depends_on:
